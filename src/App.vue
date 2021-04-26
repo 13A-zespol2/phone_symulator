@@ -1,28 +1,31 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+
+  <div id="frame">
+    <div id="screen">
+      <transition name="fade">
+        <router-view/>
+      </transition>
+    </div>
   </div>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue';
-
-export default {
-  name: 'App',
-  components: {
-    HelloWorld,
-  },
-};
-</script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style lang="scss">
+#screen {
+  background-color: lightblue;
+  width: 100%;
+  height: 99%;
+  margin: 0.8% 1% 0.7%;
+  border-radius: 4% 4% 5% 5%;
+  display: flex;
 }
+
+#frame {
+  background-color: black;
+  width: 27%;
+  height: 98%;
+  margin: 0.2% auto;
+  border-radius: 5%;
+  display: flex;
+}
+
 </style>
