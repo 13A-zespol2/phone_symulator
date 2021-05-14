@@ -2,15 +2,14 @@
   <div id="warper">
 
     <div id="background"></div>
-    <div id="background-form"></div>
 
     <v-form id="form">
-
       <v-col
         cols="3"
         sm="9"
       >
-        <v-text-field label="Wprowadz Numer telefonu"
+        <v-text-field class="input"
+                      label="Wprowadz Numer telefonu"
                       placeholder="Numer telefonu"
                       v-bind:style="input"
         ></v-text-field>
@@ -54,14 +53,13 @@ export default {
   width: 100%;
   height: 100%;
   background: #eae8e8;
-  border-radius: 4%;
+  display: flex;
 }
 
 #background {
   width: 100%;
   height: 100%;
   background-image: url("tapeta.jpg");
-  border-radius: 10%;
   filter: blur(10px);
   -webkit-filter: blur(10px);
   background-position: center;
