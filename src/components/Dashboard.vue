@@ -1,13 +1,19 @@
 <template>
   <div id="main-view">
-    <div id="background-menu"></div>
     <div id="menu-bar">
-      <button>asd</button>
-      <button></button>
-      <button></button>
-      <button></button>
+      <button id="call_button">
+        <font-awesome-icon icon="phone"/>
+      </button>
+      <button id="other_button">
+        <font-awesome-icon icon="search"/>
+      </button>
+      <button id="setting_button">
+        <font-awesome-icon icon="cog"/>
+      </button>
+      <button id="message_button">
+        <font-awesome-icon icon="sms"/>
+      </button>
     </div>
-
   </div>
 </template>
 
@@ -15,6 +21,7 @@
 export default {};
 </script>
 <style scoped>
+
 #main-view {
   background-image: url("tapeta.jpg");
   background-position: center;
@@ -22,40 +29,63 @@ export default {};
   background-size: cover;
   width: 100%;
   height: 100%;
-  border-radius: 3% 3% 4% 4%;
-  display: flex;
+  position: relative;
 }
 
 #menu-bar {
-  width: 25%;
-  height: 8%;
-  border-radius: 1.600em;
-  margin: 0.5% 0.3% 0.7% 0.7%;
-  bottom: 1.2%;
+  width: 100%;
+  height: 100px;
   position: absolute;
-  display: inline-flex;
-}
+  bottom: 0px;
+  display: flex;
+  justify-content: space-around;
+  background-color: #777;
+  padding: 18px 7px;
 
-#background-menu {
-  opacity: 0.4;
-  background-color: #d4dbdb;
-  width: 25%;
-  height: 8%;
-  border-radius: 1.300em;
-  margin: 0.5% 0.3% 0.7% 0.7%;
-  bottom: 1.2%;
-  position: absolute;
-  display: inline-flex;
 }
 
 #menu-bar button {
+  width: 18%;
+  height: 100%;
+  border-radius: 20%;
+  position: relative;
+}
 
-  background-color: #13f800;
-  width: 14%;
-  height: 90%;
-  margin-left: 5.5%;
-  margin-right: 5%;
-  margin-top: 1%;
-  border-radius: 30%;
+#call_button {
+  background-color: #00ff84;
+}
+
+#call_button * {
+  color: white;
+}
+
+#setting_button {
+  background-color: #fff;
+}
+
+#other_button {
+  background-color: #fff;
+}
+
+#other_button * {
+  color: #393939;
+}
+
+#message_button {
+  background-color: #00ff84;
+}
+
+#message_button * {
+  color: white;
+}
+
+#menu-bar button * {
+  font-size: 34px;
+  transition: .5s ease;
+}
+
+#menu-bar button:hover * {
+  font-size: 38px;
+  transition: .5s ease;
 }
 </style>
