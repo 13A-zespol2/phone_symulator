@@ -20,13 +20,13 @@ const loggedInGuard = (to, from, next) => {
   if (sessionStorage.getItem('loggedIn')) {
     next();
   } else {
-    next('/');
+    next('/dashboard');
   }
 };
 
 const notLoggedInGuard = (to, from, next) => {
   if (sessionStorage.getItem('loggedIn')) {
-    next('/dashboard');
+    next('/login');
   } else {
     next();
   }
@@ -35,8 +35,8 @@ const notLoggedInGuard = (to, from, next) => {
 const routes = [
   {
     path: '/',
-    name: 'Block',
-    component: () => import('../components/Dashboard'),
+    name: 'block',
+    component: () => import('../components/BlockScreen.vue'),
     beforeEnter: notLoggedInGuard,
   },
   {
