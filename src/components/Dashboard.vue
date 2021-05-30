@@ -7,7 +7,7 @@
       <button id="other_button">
         <font-awesome-icon icon="search"/>
       </button>
-      <button id="setting_button">
+      <button id="setting_button" v-on:click="logout()">
         <font-awesome-icon icon="cog"/>
       </button>
       <button id="message_button">
@@ -18,7 +18,28 @@
 </template>
 
 <script>
-export default {};
+
+import axios from 'axios';
+
+export default {
+  data: () => ({
+
+  }),
+  methods: {
+    logout() {
+      sessionStorage.removeItem('loggedIn');
+      axios.get('/')
+        .then((response) => {
+          if (response.status === 200) {
+            sessionStorage.removeItem('loggedIn');
+            this.$router.push('/');
+          }
+        })
+        .catch(() => {
+        });
+    },
+  },
+};
 </script>
 <style scoped>
 

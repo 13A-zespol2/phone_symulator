@@ -1,15 +1,16 @@
 <template>
   <div class="main-view">
     <div class="bg_blur"></div>
-    <form>
+    <div v-if="this.$v.loginForm.$error">Form has errors</div>
+    <form @submit.prevent="submit">
       <div class="form_input">
-        <input type="text" placeholder="Your phone number" v-model="loginForm.number"/>
+        <input type="text" placeholder="Your phone number" v-model="loginForm.number" required/>
       </div>
       <div class="form_input">
-        <input type="password" placeholder="Your passcode" v-model="loginForm.pin"/>
+        <input type="password" placeholder="Your passcode" v-model="loginForm.pin" required/>
       </div>
       <div id="example" class="form_input">
-        <a type="submit" class="submit_button" value="Log in" v-on:click="submit()"/>
+        <a type="submit" class="submit_button" value="Log in" v-on:click="submit()"> Log In </a>
       </div>
     </form>
   </div>
@@ -19,32 +20,39 @@
 
 import axios from 'axios';
 import endpoint from '@/endpoint.json';
+import { required, minLength, maxLength } from 'vuelidate/lib/validators';
 
 export default {
   data() {
     return {
       loginForm: {
-        number: '381440948',
-        pin: '123',
+        number: '607784124',
+        pin: '1234',
       },
     };
   },
+  validations: {
+    loginForm: {
+      number: { required, min: minLength(9), max: maxLength(9) },
+      pin: { required },
+    },
+  },
   methods: {
     submit() {
-      console.log(this.loginForm);
-      axios.post(`${endpoint.url}/login`, this.loginForm)
-        .then((response) => {
-          console.log('przed if');
-          if (response.status === 200) {
-            console.log('po if');
-            sessionStorage.setItem('loggedIn', this.loginForm.number);
-
-            this.$router.push('/dashboard');
-          }
-        })
-        .catch(() => {
-          this.info = 'Niepoprawne dane do logowania';
-        });
+      this.$v.loginForm.$touch();
+      if (this.$v.loginForm.$error) console.log('err');
+      else {
+        axios.post(`${endpoint.url}/login`, this.loginForm)
+          .then((response) => {
+            if (response.status === 200) {
+              sessionStorage.setItem('loggedIn', this.loginForm.number);
+              this.$router.push('/dashboard');
+            }
+          })
+          .catch(() => {
+            this.info = 'Niepoprawne dane do logowania';
+          });
+      }
     },
   },
 };
