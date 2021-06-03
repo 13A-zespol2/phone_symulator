@@ -59,30 +59,108 @@ body{
   display: flex;
   justify-content:center;
   align-items:center;
+  border-radius:3px;
 }
 
 #frame {
-  padding:60px 15px 20px;
+  padding:60px 20px 20px;
   background-color: white;
-  width: 450px;
+  width: 410px;
   height: 90%;
   display: flex;
-  border-radius:40px;
+  border-radius:60px;
   margin:auto;
   align-items:center;
   flex-direction:column;
   position: relative;
+  box-shadow:inset 0 0px 10px 2px #484848;
 }
 
 .home_button{
   width:60px;
   height:60px;
   border-radius:50px;
-  border:3px solid #cecece;
+  border:3px solid #393939;
   margin-top:10px;
+  transition:.5s ease;
 }
 
 .home_button:hover{
   background-color: #fafafa;
+  cursor:pointer;
+  transition:.5s ease;
+  border:3px solid #ffd500;
+  box-shadow: 0 0px 15px 1px #ffd500;
+}
+
+#main-view {
+  background-image: url("/src/images/tapeta.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+#menu-bar {
+  width: 100%;
+  height: 100px;
+  position: absolute;
+  bottom: 0px;
+  display: flex;
+  justify-content: space-around;
+  background-color: #222;
+  padding: 14px 0;
+  align-items:center;
+}
+
+#menu-bar button {
+  width: 18%;
+  height: 80%;
+  border-radius: 20%;
+  position: relative;
+}
+
+#menu-bar button:hover{
+  cursor:pointer;
+}
+
+#call_button {
+  background-color: #00ff84;
+}
+
+#call_button * {
+  color: white;
+}
+
+#browser_button {
+  background-color: #fff;
+}
+
+#sms_button {
+  background-color: #fff;
+}
+
+#sms_button * {
+  color: #393939;
+}
+
+#logout_button {
+  background-color: #00ff84;
+}
+
+#logout_button * {
+  color: white;
+}
+
+#menu-bar button * {
+  font-size: 34px;
+  transition: .5s ease;
+}
+
+#menu-bar button:hover * {
+  font-size: 38px;
+  transition: .5s ease;
 }
 </style>

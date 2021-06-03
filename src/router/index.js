@@ -36,7 +36,7 @@ const routes = [
   {
     path: '/',
     name: 'block',
-    component: () => import('../components/BlockScreen.vue'),
+    component: () => import('../components/Dashboard'),
     beforeEnter: notLoggedInGuard,
   },
   {

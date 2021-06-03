@@ -1,18 +1,10 @@
 <template>
   <div id="main-view">
     <div id="menu-bar">
-      <button id="call_button">
-        <font-awesome-icon icon="phone"/>
-      </button>
-      <button id="other_button">
-        <font-awesome-icon icon="search"/>
-      </button>
-      <button id="setting_button">
-        <font-awesome-icon icon="cog"/>
-      </button>
-      <button id="message_button">
-        <font-awesome-icon icon="sms"/>
-      </button>
+      <button id="call_button"><i class="fas fa-phone-alt"></i></button>
+      <button id="sms_button"><i class="fas fa-envelope"></i></button>
+      <button id="browser_button"><i class="fab fa-firefox-browser"></i></button>
+      <button id="logout_button"><i class="fas fa-sign-out-alt"></i></button>
     </div>
   </div>
 </template>
@@ -21,6 +13,82 @@
 export default {};
 </script>
 <style scoped>
+body{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background-color: #393939;
+}
+
+.top_bar{
+  position: absolute;
+  top:25px;
+  margin:auto;
+  width:80%;
+  height:20px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.aparat{
+  width:10px;
+  height:10px;
+  background-color: #252525;
+  border-radius:10px;
+  margin: 0 5px;
+}
+
+.speaker{
+  width:20%;
+  height:8px;
+  background-color: #252525;
+  border-radius:20px;
+  margin: 0 5px;
+}
+
+#screen {
+  background-color: #000;
+  padding:3px;
+  width:100%;
+  height:90%;
+  margin:0.8% 1% 0.7%;
+  display: flex;
+  justify-content:center;
+  align-items:center;
+  border-radius:3px;
+}
+
+#frame {
+  padding:60px 20px 20px;
+  background-color: white;
+  width: 410px;
+  height: 90%;
+  display: flex;
+  border-radius:60px;
+  margin:auto;
+  align-items:center;
+  flex-direction:column;
+  position: relative;
+  box-shadow:inset 0 0px 10px 2px #484848;
+}
+
+.home_button{
+  width:60px;
+  height:60px;
+  border-radius:50px;
+  border:3px solid #393939;
+  margin-top:10px;
+  transition:.5s ease;
+}
+
+.home_button:hover{
+  background-color: #fafafa;
+  cursor:pointer;
+  transition:.5s ease;
+  border:3px solid #ffd500;
+  box-shadow: 0 0px 15px 1px #ffd500;
+}
 
 #main-view {
   background-image: url("tapeta.jpg");
@@ -39,16 +107,20 @@ export default {};
   bottom: 0px;
   display: flex;
   justify-content: space-around;
-  background-color: #777;
-  padding: 18px 7px;
-
+  background-color: #222;
+  padding: 14px 0;
+  align-items:center;
 }
 
 #menu-bar button {
   width: 18%;
-  height: 100%;
+  height: 80%;
   border-radius: 20%;
   position: relative;
+}
+
+#menu-bar button:hover{
+  cursor:pointer;
 }
 
 #call_button {
@@ -59,23 +131,23 @@ export default {};
   color: white;
 }
 
-#setting_button {
+#browser_button {
   background-color: #fff;
 }
 
-#other_button {
+#sms_button {
   background-color: #fff;
 }
 
-#other_button * {
+#sms_button * {
   color: #393939;
 }
 
-#message_button {
+#logout_button {
   background-color: #00ff84;
 }
 
-#message_button * {
+#logout_button * {
   color: white;
 }
 

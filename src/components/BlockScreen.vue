@@ -3,13 +3,13 @@
     <div class="bg_blur"></div>
     <form>
       <div class="form_input">
-        <input type="text" placeholder="Your phone number" v-model="loginForm.number"/>
+        <input v-model="loginForm.number" placeholder="Your phone number" type="text"/>
       </div>
       <div class="form_input">
-        <input type="password" placeholder="Your passcode" v-model="loginForm.pin"/>
+        <input v-model="loginForm.pin" placeholder="Your passcode" type="password"/>
       </div>
       <div id="example" class="form_input">
-        <a type="submit" class="submit_button" value="Log in" v-on:click="submit()"/>
+        <a class="submit_button" type="submit" value="Log in" v-on:click="submit()"/>
       </div>
     </form>
   </div>
@@ -34,9 +34,7 @@ export default {
       console.log(this.loginForm);
       axios.post(`${endpoint.url}/login`, this.loginForm)
         .then((response) => {
-          console.log('przed if');
           if (response.status === 200) {
-            console.log('po if');
             sessionStorage.setItem('loggedIn', this.loginForm.number);
 
             this.$router.push('/dashboard');

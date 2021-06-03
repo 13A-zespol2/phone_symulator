@@ -12,8 +12,8 @@ body, html {
 }
 
 body {
-    background: #646464;
-    overflow: hidden;
-    overflow-y: hidden;
-    display: flex;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background-color: #393939;
 }
