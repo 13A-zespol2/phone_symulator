@@ -9,7 +9,7 @@
         <input v-model="loginForm.pin" placeholder="Your passcode" type="password"/>
       </div>
       <div id="example" class="form_input">
-        <a class="submit_button" type="submit" value="Log in" v-on:click="submit()"/>
+        <a class="submit_button" type="submit" value="Log in" v-on:click="submit()">Log In</a>
       </div>
     </form>
   </div>
@@ -24,8 +24,8 @@ export default {
   data() {
     return {
       loginForm: {
-        number: '381440948',
-        pin: '123',
+        number: '607784124',
+        pin: '1234',
       },
     };
   },

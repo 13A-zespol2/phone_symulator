@@ -1,16 +1,51 @@
 <template>
   <div id="main-view">
     <div id="menu-bar">
-      <button id="call_button"><i class="fas fa-phone-alt"></i></button>
-      <button id="sms_button"><i class="fas fa-envelope"></i></button>
-      <button id="browser_button"><i class="fab fa-firefox-browser"></i></button>
-      <button id="logout_button"><i class="fas fa-sign-out-alt"></i></button>
+      <button id="call_button" v-on:click="changeRoute('/dashboard')">
+        <font-awesome-icon icon="phone-alt" />
+      </button>
+      <button id="sms_button"  v-on:click="changeRoute('/messages')">
+        <font-awesome-icon icon="envelope" /></button>
+      <button id="browser_button" v-on:click="changeRoute('/browser')">
+        <font-awesome-icon :icon="['fab', 'firefox-browser']" /></button>
+      <button id="logout_button" v-on:click="logout">
+        <font-awesome-icon icon="sign-out-alt" />
+        </button>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faEnvelope, faSignOutAlt, faPhoneAlt } from '@fortawesome/free-solid-svg-icons';
+import { faFirefoxBrowser } from '@fortawesome/free-brands-svg-icons';
+import axios from 'axios';
+
+library.add(faEnvelope, faSignOutAlt, faPhoneAlt, faFirefoxBrowser);
+
+export default {
+  props: ['order'],
+  methods: {
+    changeRoute(route) {
+      this.$router.push(route).catch((error) => {
+        if (error.name !== 'NavigationDuplicated') {
+          throw error;
+        }
+      });
+    },
+
+    logout() {
+      axios.get('/')
+        .then(() => {
+          sessionStorage.removeItem('loggedIn');
+          this.$router.push('/');
+        })
+        .catch(() => {
+        });
+    },
+  },
+};
 </script>
 <style scoped>
 body{

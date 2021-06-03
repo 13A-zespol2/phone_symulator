@@ -11,10 +11,23 @@
       </transition>
     </div>
 
-    <div class="home_button"></div>
+    <div class="home_button" v-on:click="changeRoute()"></div>
   </div>
 </template>
-
+<script>
+export default {
+  methods: {
+    changeRoute() {
+      this.$router.push('/dashboard')
+        .catch((error) => {
+          if (error.name !== 'NavigationDuplicated') {
+            throw error;
+          }
+        });
+    },
+  },
+};
+</script>
 <style lang="scss">
 body{
   display:flex;

@@ -3,7 +3,7 @@
     <div id="main-view">
       <div class="messages_title">
         <p>Messages</p>
-        <input class="sub_but" type="submit" value="➕">
+        <input class="sub_but" type="submit" value="➕" v-on:click="$router.push('/singlemessage')">
       </div>
 
       <div class="message_view">
@@ -78,7 +78,10 @@
 </template>
 
 <script>
-
+export default {
+  methods: {
+  },
+};
 </script>
 
 <style scoped>
@@ -253,7 +256,7 @@ input[type="submit"] {
   border-radius: 40px;
   border: none;
   transition: .5s ease;
-  padding: 15px;
+  padding: 10px;
 }
 
 input[type="submit"]:hover {

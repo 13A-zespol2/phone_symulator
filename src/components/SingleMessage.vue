@@ -1,12 +1,11 @@
 <template>
   <div id="main-view">
     <div class="message_title">
-      <div class="back_button">Back</div>
+      <div class="sub_but" v-on:click="$router.push('/messages')"> Back </div>
     </div>
 
     <div class="message_view">
 
-      <p>New message</p>
       <div class="recipent">
         <div class="message_number">To:</div>
         <input class="message_to" type="text">
@@ -42,14 +41,20 @@
 
       <div class="message_text">
         <textarea></textarea>
-        <input class="sub_but" type="submit" value="➕">
+        <input class="sub_but" type="submit" value="➕" v-on:click="send()">
       </div>
     </div>
   </div>
 </template>
 
 <script>
-
+export default {
+  methods: {
+    send() {
+      console.log('wyslano');
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -58,6 +63,12 @@ body {
   justify-content: center;
   align-items: center;
   background-color: #393939;
+}
+
+textarea {
+  border: 1px solid white !important;
+  border-radius: 10px;
+  resize: none;
 }
 
 #main-view {
@@ -193,6 +204,7 @@ input[type="submit"] {
   border: none;
   transition: .5s ease;
   padding: 15px;
+  color: white;
 }
 
 input[type="submit"]:hover {

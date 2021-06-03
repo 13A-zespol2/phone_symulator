@@ -36,13 +36,37 @@ const routes = [
   {
     path: '/',
     name: 'block',
-    component: () => import('../components/Dashboard'),
+    component: () => import('../components/BlockScreen.vue'),
     beforeEnter: notLoggedInGuard,
   },
   {
     path: '/dashboard',
     name: 'dashboard',
     component: () => import('../components/Dashboard.vue'),
+    beforeEnter: loggedInGuard,
+  },
+  /* {
+    path: '/call',
+    name: 'call',
+    component: () => import('../components/Call.vue'),
+    beforeEnter: loggedInGuard,
+  }, */
+  {
+    path: '/browser',
+    name: 'browser',
+    component: () => import('../components/Browser.vue'),
+    beforeEnter: loggedInGuard,
+  },
+  {
+    path: '/messages',
+    name: 'messages',
+    component: () => import('../components/Messages.vue'),
+    beforeEnter: loggedInGuard,
+  },
+  {
+    path: '/singlemessage',
+    name: 'singlemessage',
+    component: () => import('../components/SingleMessage.vue'),
     beforeEnter: loggedInGuard,
   },
 ];

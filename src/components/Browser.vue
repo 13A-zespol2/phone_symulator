@@ -2,7 +2,7 @@
 
   <div id="main-view">
     <iframe id="inlineFrameExample" frameBorder="0" height="100%" src="https://www.google.com/search?igu=1"
-            width="410px"></iframe>
+            width="364px"></iframe>
   </div>
 
 </template>
