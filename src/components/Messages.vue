@@ -8,78 +8,32 @@
 
       <div class="message_view">
         <div class="message_body">
-
-          <div class="simple_message">
-            <div class="icon">K</div>
-            <div class="message_content">
-              <p class="sender">Test sender</p>
-              <p class="content">Simple content of sent message here</p>
-            </div>
-          </div>
-
-          <div class="simple_message">
-            <div class="icon">K</div>
-            <div class="message_content">
-              <p class="sender">Test sender</p>
-              <p class="content">Simple content of sent message here</p>
-            </div>
-          </div>
-
-          <div class="simple_message">
-            <div class="icon">K</div>
-            <div class="message_content">
-              <p class="sender">Test sender</p>
-              <p class="content">Simple content of sent message here</p>
-            </div>
-          </div>
-
-          <div class="simple_message">
-            <div class="icon">K</div>
-            <div class="message_content">
-              <p class="sender">Test sender</p>
-              <p class="content">Simple content of sent message here</p>
-            </div>
-          </div>
-
-          <div class="simple_message">
-            <div class="icon">K</div>
-            <div class="message_content">
-              <p class="sender">Test sender</p>
-              <p class="content">Simple content of sent message here</p>
-            </div>
-          </div>
-
-          <div class="simple_message">
-            <div class="icon">K</div>
-            <div class="message_content">
-              <p class="sender">Test sender</p>
-              <p class="content">Simple content of sent message here</p>
-            </div>
-          </div>
-
-          <div class="simple_message">
-            <div class="icon">K</div>
-            <div class="message_content">
-              <p class="sender">Test sender</p>
-              <p class="content">Simple content of sent message here</p>
-            </div>
-          </div>
-
-          <div class="simple_message">
-            <div class="icon">K</div>
-            <div class="message_content">
-              <p class="sender">Test sender</p>
-              <p class="content">Simple content of sent message here</p>
-            </div>
-          </div>
+      <div class="simple_message" v-for="(message, index) in messages" :key="'mess'+index">
+        <div class="icon">K</div>
+        <div class="message_content">
+            <p class="sender">{{ message.sender }} </p>
+            <p class="content">{{ message.content}}</p>
+        </div>
+      </div>
         </div>
       </div>
     </div>
 </template>
 
 <script>
+
 export default {
+  data() {
+    return {
+      messages: [
+        { sender: '789789789', content: 'Simple content of mesg1' },
+        { sender: '123123123', content: 'Simple content of mesg2' },
+        { sender: '111111111', content: 'Simple content of mesg3' },
+      ],
+    };
+  },
   methods: {
+
   },
 };
 </script>

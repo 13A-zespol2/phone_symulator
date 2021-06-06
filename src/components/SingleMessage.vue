@@ -8,7 +8,7 @@
 
       <div class="recipent">
         <div class="message_number">To:</div>
-        <input class="message_to" type="text">
+        <input class="message_to" type="text" v-model="smsData.phoneNumberReceiver">
       </div>
 
       <div class="message_body">
@@ -21,26 +21,10 @@
           <p>This is a test received message, needed for test purposes.</p>
         </div>
 
-        <div class="message_sent">
-          <p>This is a test sent message, needed for test purposes.</p>
-        </div>
-
-        <div class="message_received">
-          <p>This is a test received message, needed for test purposes.</p>
-        </div>
-
-        <div class="message_sent">
-          <p>This is a test sent message, needed for test purposes.</p>
-        </div>
-
-        <div class="message_received">
-          <p>This is a test received message, needed for test purposes.</p>
-        </div>
-
       </div>
 
       <div class="message_text">
-        <textarea></textarea>
+        <textarea v-model="smsData.message"></textarea>
         <input class="sub_but" type="submit" value="➕" v-on:click="send()">
       </div>
     </div>
@@ -48,10 +32,35 @@
 </template>
 
 <script>
+
+/* import axios from 'axios'
+import endpoint from '../endpoint.json'; */
+
 export default {
+
+  data() {
+    return {
+      smsData: {
+        phoneNumberSender: '789789789',
+        phoneNumberReceiver: '845818085',
+        message: 'wiadomosc',
+        dateSms: 'data',
+      },
+    };
+  },
   methods: {
     send() {
-      console.log('wyslano');
+      console.log(this.smsData);
+      /* axios.post(`${endpoint.url}/singlemessage`, this.smsData)
+        .then((response) => {
+          if (response.status === 200) {
+            sessionStorage.setItem('loggedIn', JSON.stringify(response.data))
+            this.$router.push('/dashboard');
+          }
+        })
+        .catch(() => {
+          console.log('dsa');
+        }); */
     },
   },
 };
