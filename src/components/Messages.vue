@@ -32,9 +32,27 @@ export default {
       ],
     };
   },
-  methods: {
-
+  mounted() {
+    const e = JSON.parse(sessionStorage.getItem('loggedIn'));
+    console.log(e.number);
+    this.phoneNumberVue = e.number;
+    this.smsLoad();
   },
+  methods: {
+    smsLoad() {
+      axios.get(`${endpoint.url}/sms/${this.phoneNumberVue}`)
+        .then((response) => {
+          if (response.status === 200) {
+            console.log(response.data);
+            this.messages = response.data;
+          }
+        })
+        .catch(() => {
+          this.info = 'Zly login lub haslo';
+        });
+    },
+  },
+
 };
 </script>
 
