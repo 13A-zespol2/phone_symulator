@@ -24,8 +24,8 @@ export default {
   data() {
     return {
       loginForm: {
-        number: '789789789',
-        pin: '1234',
+        number: '111111111',
+        pin: 'pin',
       },
     };
   },
@@ -35,7 +35,7 @@ export default {
       axios.post(`${endpoint.url}/login`, this.loginForm)
         .then((response) => {
           if (response.status === 200) {
-            sessionStorage.setItem('loggedIn', this.loginForm.number);
+            sessionStorage.setItem('loggedIn', JSON.stringify(response.data));
 
             this.$router.push('/dashboard');
           }

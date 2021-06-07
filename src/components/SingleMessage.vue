@@ -8,23 +8,14 @@
 
       <div class="recipent">
         <div class="message_number">To:</div>
-        <input class="message_to" type="text" v-model="smsData.phoneNumberReceiver">
+        <input class="message_to" type="text" v-model="newSms.phoneNumberReceiver">
       </div>
 
       <div class="message_body">
-
-        <div class="message_sent">
-          <p>This is a test sent message, needed for test purposes.</p>
-        </div>
-
-        <div class="message_received">
-          <p>This is a test received message, needed for test purposes.</p>
-        </div>
-
       </div>
 
       <div class="message_text">
-        <textarea v-model="smsData.message"></textarea>
+        <textarea v-model="newSms.message"></textarea>
         <input class="sub_but" type="submit" value="➕" v-on:click="send()">
       </div>
     </div>
@@ -33,34 +24,33 @@
 
 <script>
 
-/* import axios from 'axios'
-import endpoint from '../endpoint.json'; */
+import axios from 'axios';
+import endpoint from '@/endpoint.json';
 
 export default {
 
   data() {
     return {
-      smsData: {
-        phoneNumberSender: '789789789',
-        phoneNumberReceiver: '845818085',
-        message: 'wiadomosc',
-        dateSms: 'data',
+      newSms: {
+        phoneNumberSender: JSON.parse(sessionStorage.getItem('loggedIn')),
+        phoneNumberReceiver: '',
+        message: '',
       },
+
     };
   },
   methods: {
     send() {
-      console.log(this.smsData);
-      /* axios.post(`${endpoint.url}/singlemessage`, this.smsData)
+      console.log(this.newSms);
+      axios.post(`${endpoint.url}/sms/singlemessage`, this.newSms)
         .then((response) => {
           if (response.status === 200) {
-            sessionStorage.setItem('loggedIn', JSON.stringify(response.data))
-            this.$router.push('/dashboard');
+            console.log('Wyslano');
           }
         })
         .catch(() => {
           console.log('dsa');
-        }); */
+        });
     },
   },
 };

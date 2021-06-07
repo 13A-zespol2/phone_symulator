@@ -49,25 +49,21 @@ const routes = [
     path: '/call',
     name: 'call',
     component: () => import('../components/Call.vue'),
-    beforeEnter: loggedInGuard,
   }, */
   {
     path: '/browser',
     name: 'browser',
     component: () => import('../components/Browser.vue'),
-    beforeEnter: loggedInGuard,
   },
   {
     path: '/messages',
     name: 'messages',
     component: () => import('../components/Messages.vue'),
-    beforeEnter: loggedInGuard,
   },
   {
     path: '/singlemessage',
     name: 'singlemessage',
     component: () => import('../components/SingleMessage.vue'),
-    beforeEnter: loggedInGuard,
   },
 ];
 
