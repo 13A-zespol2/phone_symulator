@@ -12,6 +12,13 @@
       </div>
 
       <div class="message_body">
+        <div class="message_sent" v-for="(sent, index) in sentMessages" :key="'snt'+index">
+          <p>{{sent.message}}</p>
+        </div>
+
+        <div class="message_received" v-for="(received, indexx) in receivedMessages" :key="'rcv'+indexx">
+          <p>{{received.message}}</p>
+        </div>
       </div>
 
       <div class="message_text">
@@ -33,23 +40,42 @@ export default {
     return {
       newSms: {
         phoneNumberSender: JSON.parse(sessionStorage.getItem('loggedIn')),
-        phoneNumberReceiver: '',
+        phoneNumberReceiver: JSON.parse(sessionStorage.getItem('phoneNumberReceiver')),
         message: '',
       },
 
+      sentMessages: [],
+      receivedMessages: [],
     };
   },
+
+  mounted() {
+    this.loadCurrentNumberSms();
+    console.log(this.phoneNumberReceiver);
+  },
+
   methods: {
     send() {
-      console.log(this.newSms);
       axios.post(`${endpoint.url}/sms/singlemessage`, this.newSms)
         .then((response) => {
           if (response.status === 200) {
-            console.log('Wyslano');
+            this.sentMessages.push(response.data);
           }
         })
         .catch(() => {
           console.log('dsa');
+        });
+    },
+
+    loadCurrentNumberSms() {
+      axios.get(`${endpoint.url}/sms/${this.phoneNumberReceiver}`)
+        .then((response) => {
+          if (response.status === 200) {
+            console.log(response.data);
+          }
+        })
+        .catch(() => {
+          this.info = 'Zly login lub haslo';
         });
     },
   },
@@ -229,6 +255,8 @@ input[type="submit"]:hover {
 }
 
 .message_body {
+  width: 100%;
+  height: 100%;
   overflow-y: scroll;
   padding: 20px 0;
 }

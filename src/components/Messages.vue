@@ -8,11 +8,12 @@
 
       <div class="message_view">
         <div class="message_body">
-      <div class="simple_message" v-for="(message, index) in messages" :key="'mess'+index">
+      <div class="simple_message" v-on:click="klik(message)"
+           v-for="(message, index) in messages" :key="'mess'+index">
         <div class="icon">K</div>
         <div class="message_content">
-            <p class="sender">{{ message.sender }} </p>
-            <p class="content">{{ message.content}}</p>
+            <p class="sender" >{{ message.phoneNumberReceiver }} </p>
+            <p class="content" >{{ message.message }} </p>
         </div>
       </div>
         </div>
@@ -22,16 +23,17 @@
 
 <script>
 
+import axios from 'axios';
+import endpoint from '@/endpoint.json';
+
 export default {
   data() {
     return {
-      messages: [
-        { sender: '789789789', content: 'Simple content of mesg1' },
-        { sender: '123123123', content: 'Simple content of mesg2' },
-        { sender: '111111111', content: 'Simple content of mesg3' },
-      ],
+      phoneNumberVue: '',
+      messages: [],
     };
   },
+
   mounted() {
     const e = JSON.parse(sessionStorage.getItem('loggedIn'));
     console.log(e.number);
@@ -50,6 +52,21 @@ export default {
         .catch(() => {
           this.info = 'Zly login lub haslo';
         });
+    },
+    klik(phoneNumber) {
+      console.log(phoneNumber);
+      sessionStorage.setItem('phoneNumberReceiver', JSON.stringify(phoneNumber));
+      this.$router.push('/singlemessage');
+      /* axios.get(`${endpoint.url}/sms/${this.message}`)
+        .then((response) => {
+          if (response.status === 200) {
+            console.log(response.data);
+            this.$router.push('/singlemessage');
+          }
+        })
+        .catch(() => {
+          this.info = 'Zly login lub haslo';
+        }); */
     },
   },
 
