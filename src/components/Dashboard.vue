@@ -1,7 +1,7 @@
 <template>
   <div id="main-view">
     <div id="menu-bar">
-      <button id="call_button" v-on:click="changeRoute('/dashboard')">
+      <button id="call_button" v-on:click="changeRoute('/calling')">
         <font-awesome-icon icon="phone-alt" />
       </button>
       <button id="sms_button"  v-on:click="changeRoute('/messages')">

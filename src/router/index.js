@@ -10,6 +10,7 @@ import BlockScreen from '../components/BlockScreen.vue';
 import Messages from '../components/Messages.vue';
 import Dashboard from '../components/Dashboard.vue';
 import SingleMessage from '../components/SingleMessage.vue';
+import Calling from '../components/Calling.vue';
 
 library.add(faPhone);
 library.add(faSms);
@@ -21,6 +22,7 @@ Vue.component('blockscreen', BlockScreen);
 Vue.component('messages', Messages);
 Vue.component('dashboard', Dashboard);
 Vue.component('singlemessage', SingleMessage);
+Vue.component('calling', Calling);
 
 Vue.use(VueRouter);
 
@@ -53,11 +55,11 @@ const routes = [
     component: () => import('../components/Dashboard.vue'),
     beforeEnter: loggedInGuard,
   },
-  /* {
-    path: '/call',
-    name: 'call',
-    component: () => import('../components/Call.vue'),
-  }, */
+  {
+    path: '/calling',
+    name: 'calling',
+    component: () => import('../components/Calling.vue'),
+  },
   {
     path: '/browser',
     name: 'browser',

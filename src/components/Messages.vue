@@ -74,6 +74,10 @@ export default {
 </script>
 
 <style scoped>
+@font-face {
+  font-family: "cg";
+  src: url("../fonts/CenturyGothic.ttf");
+}
 body {
   display: flex;
   justify-content: center;
@@ -175,14 +179,14 @@ body {
   bottom: 0;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  font-family: Verdana;
+  font-family: cg;
 }
 
 .messages_title {
   color: white;
   font-size: 20px;
   margin-top: 10px;
-  font-family: Verdana;
+  font-family: cg;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
