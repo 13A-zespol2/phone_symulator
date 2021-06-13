@@ -42,7 +42,7 @@ export default {
         phoneNumberSender: '',
         phoneNumberReceiver: '',
         message: '',
-        date: ''
+        date: '',
       },
 
       sentMessages: [],
@@ -53,18 +53,15 @@ export default {
   mounted() {
     this.newSms.phoneNumberSender = JSON.parse(sessionStorage.getItem('loggedIn'));
     if (sessionStorage.getItem('phoneNumberReceiver') != null) {
-      let receiver = JSON.parse(sessionStorage.getItem('phoneNumberReceiver')).phoneNumberReceiver;
+      const receiver = JSON.parse(sessionStorage.getItem('phoneNumberReceiver')).phoneNumberReceiver;
       this.newSms.phoneNumberReceiver = receiver;
       this.loadCurrentNumberSms();
     }
-
-
-
   },
 
   methods: {
     send() {
-console.log(this.newSms)
+      console.log(this.newSms);
       axios.post(`${endpoint.url}/sms/singlemessage`, this.newSms)
         .then((response) => {
           if (response.status === 200) {
@@ -77,7 +74,7 @@ console.log(this.newSms)
     },
 
     loadCurrentNumberSms() {
-      console.log(this.newSms)
+      console.log(this.newSms);
       axios.post(`${endpoint.url}/sms/load`, this.newSms)
         .then((response) => {
           if (response.status === 200) {
