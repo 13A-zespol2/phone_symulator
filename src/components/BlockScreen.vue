@@ -1,6 +1,8 @@
 <template>
   <div class="main-view">
     <div class="bg_blur"></div>
+
+    <FlashMessage :position="'right top'"></FlashMessage>
     <form>
       <div class="form_input">
         <input v-model="loginForm.number" placeholder="Your phone number" type="text"/>
@@ -31,17 +33,28 @@ export default {
   },
   methods: {
     submit() {
-      console.log(this.loginForm);
       axios.post(`${endpoint.url}/login`, this.loginForm)
         .then((response) => {
           if (response.status === 200) {
             sessionStorage.setItem('loggedIn', JSON.stringify(response.data));
-
-            this.$router.push('/dashboard');
+            this.flashMessage.success({
+              status: 'success',
+              title: 'Success!',
+              message: 'You provided correct credentials!',
+              time: 2000,
+            });
+            setTimeout(() => {
+              this.$router.push('/dashboard');
+            }, 2000);
           }
         })
         .catch(() => {
-          this.info = 'Niepoprawne dane do logowania';
+          this.flashMessage.error({
+            status: 'error',
+            title: 'Error!',
+            message: 'You provided incorrect credentials!',
+            time: 200000,
+          });
         });
     },
   },
@@ -50,6 +63,10 @@ export default {
 </script>
 
 <style scoped>
+*{
+  font-family: cg;
+}
+
 .main-view {
   background-image: url("tapeta.jpg");
   background-position: center;
