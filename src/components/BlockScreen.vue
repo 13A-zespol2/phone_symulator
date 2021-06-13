@@ -11,7 +11,7 @@
         <input v-model="loginForm.pin" placeholder="Your passcode" type="password"/>
       </div>
       <div id="example" class="form_input">
-        <a class="submit_button" type="submit" value="Log in" v-on:click="submit()">Log In</a>
+        <a class="submit_button" type="submit" v-on:click="submit()">Log In</a>
       </div>
     </form>
   </div>
@@ -53,7 +53,7 @@ export default {
             status: 'error',
             title: 'Error!',
             message: 'You provided incorrect credentials!',
-            time: 200000,
+            time: 2000,
           });
         });
     },

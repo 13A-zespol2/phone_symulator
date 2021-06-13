@@ -1,7 +1,7 @@
 <template>
   <div id="screen">
     <div id="main-view">
-
+      <FlashMessage :position="'right top'"></FlashMessage>
       <div class="message_view">
 
         <div class="recipent">
@@ -75,13 +75,18 @@ export default {
     return {
       idd: '',
       minutes: 0,
-      seconds: 0,
       callTimer: '',
+
+      callData: {
+        phoneNumber: '',
+        seconds: 0,
+      }
     };
+
   },
 
   mounted() {
-    this.phoneNumberVue = JSON.parse(sessionStorage.getItem('loggedIn')).number;
+    this.callData.phoneNumber = JSON.parse(sessionStorage.getItem('loggedIn')).number;
   },
 
   name: 'Calling',
@@ -98,48 +103,63 @@ export default {
       $('#number_input').val(value);
     },
     createNewCall() {
-      $('.popup').css('display', 'flex');
-      $('#calling_number').html($('#number_input').val());
-      setTimeout(() => {
-      }, 3000);
 
-      this.callTimer = setInterval(() => {
-        this.minutes += 1;
-        this.seconds += 1;
-        if (this.seconds < 60) {
-          $('#minutes').html('00');
-        }
-        $('#seconds').html(this.seconds);
+      if($('#number_input').val().length < 9){
+        this.flashMessage.warning({
+          status: 'warning',
+          title: 'Warning!',
+          message: 'Provided phone number is too short!',
+          time: 2000,
+        });
+      }else{
+        $('.popup').css('display', 'flex');
+        $('#calling_number').html($('#number_input').val());
+        setTimeout(() => {
+        }, 3000);
 
-        if (this.seconds === 60) {
+        this.callTimer = setInterval(() => {
           this.minutes += 1;
-        }
-      }, 1000);
+          this.callData.seconds += 1;
+          if (this.callData.seconds < 60) {
+            $('#minutes').html('00');
+          }
+          $('#seconds').html(this.callData.seconds);
+
+          if (this.callData.seconds === 60) {
+            this.minutes += 1;
+          }
+        }, 1000);
+      }
     },
     endTimer() {
       $('.popup').css('display', 'none');
       clearInterval(this.callTimer);
       this.minutes = 0;
-      this.seconds = 0;
+      this.callData.seconds = 0;
       $('#seconds').html('');
       $('#minutes').html('');
     },
 
-    destroyed() {
-      this.endTimer();
-    },
-
     endCall() {
-      console.log(this.seconds);
-      axios.put(`${endpoint.url}/phone/call/${this.phoneNumberVue}/${this.seconds}`, this.phoneNumberVue, this.seconds)
+      axios.post(`${endpoint.url}/call/endcall`, this.callData)
         .then((response) => {
           if (response.status === 200) {
-            // this.endTimer();
-            console.log('dsa');
+            this.endTimer();
+            this.flashMessage.info({
+              status: 'info',
+              title: 'Info',
+              message: 'Phone call ended.',
+              time: 2000,
+            });
           }
         })
         .catch(() => {
-          console.log('dsa');
+          this.flashMessage.error({
+            status: 'error',
+            title: 'Error',
+            message: 'Can`t make a phone call',
+            time: 2000,
+          });
         });
     },
   },

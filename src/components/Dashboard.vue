@@ -1,5 +1,6 @@
 <template>
   <div id="main-view">
+    <FlashMessage :position="'right top'"></FlashMessage>
     <div id="menu-bar">
       <button id="call_button" v-on:click="changeRoute('/calling')">
         <font-awesome-icon icon="phone-alt" />
@@ -40,8 +41,20 @@ export default {
         .then(() => {
           sessionStorage.removeItem('loggedIn');
           this.$router.push('/');
+          this.flashMessage.info({
+            status: 'info',
+            title: 'Info!',
+            message: 'Logged out successfylly!',
+            time: 2000,
+          });
         })
         .catch(() => {
+          this.flashMessage.error({
+            status: 'error',
+            title: 'Error!',
+            message: 'Error during logging out!',
+            time: 2000,
+          });
         });
     },
   },

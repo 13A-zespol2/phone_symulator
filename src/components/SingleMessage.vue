@@ -53,15 +53,13 @@ export default {
   mounted() {
     this.newSms.phoneNumberSender = JSON.parse(sessionStorage.getItem('loggedIn'));
     if (sessionStorage.getItem('phoneNumberReceiver') != null) {
-      const receiver = JSON.parse(sessionStorage.getItem('phoneNumberReceiver')).phoneNumberReceiver;
-      this.newSms.phoneNumberReceiver = receiver;
+      this.newSms.phoneNumberReceiver = JSON.parse(sessionStorage.getItem('phoneNumberReceiver')).phoneNumberReceiver;
       this.loadCurrentNumberSms();
     }
   },
 
   methods: {
     send() {
-      console.log(this.newSms);
       axios.post(`${endpoint.url}/sms/singlemessage`, this.newSms)
         .then((response) => {
           if (response.status === 200) {
@@ -69,7 +67,7 @@ export default {
           }
         })
         .catch(() => {
-          console.log('dsa');
+          console.log('err');
         });
     },
 
@@ -82,7 +80,7 @@ export default {
           }
         })
         .catch(() => {
-          console.log('dsa');
+          console.log('err');
         });
     },
   },

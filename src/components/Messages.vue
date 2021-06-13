@@ -29,21 +29,19 @@ import endpoint from '@/endpoint.json';
 export default {
   data() {
     return {
-      phoneNumberVue: '',
+      phoneNumber: '',
       messages: [],
       receiverPhoneNumber: '',
     };
   },
 
   mounted() {
-    const e = JSON.parse(sessionStorage.getItem('loggedIn'));
-    console.log(e.number);
-    this.phoneNumberVue = e.number;
+    this.phoneNumber = JSON.parse(sessionStorage.getItem('loggedIn')).number;
     this.smsLoad();
   },
   methods: {
     smsLoad() {
-      axios.get(`${endpoint.url}/sms/${this.phoneNumberVue}`)
+      axios.get(`${endpoint.url}/sms/${this.phoneNumber}`)
         .then((response) => {
           if (response.status === 200) {
             console.log(response.data);
@@ -51,7 +49,12 @@ export default {
           }
         })
         .catch(() => {
-          this.info = 'Zly login lub haslo';
+          this.flashMessage.error({
+            status: 'error',
+            title: 'Error!',
+            message: 'Error during logging out!',
+            time: 2000,
+          });
         });
     },
     klik(phoneNumber) {
