@@ -8,7 +8,7 @@
 
       <div class="recipent">
         <div class="message_number">To:</div>
-        <input class="message_to" type="text" v-model="newSms.phoneNumberReceiver">
+        <input class="message_to" value="123" type="text" v-model="newSms.phoneNumberReceiver">
       </div>
 
       <div class="message_body">

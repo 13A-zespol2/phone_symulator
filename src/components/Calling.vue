@@ -53,7 +53,7 @@
         </div>
 
         <div class="number_container">
-          <div v-on:click="declineCall()" class="number decline_icon"><font-awesome-icon icon="phone-alt" /></div>
+          <div v-on:click="endCall()" class="number decline_icon"><font-awesome-icon icon="phone-alt" /></div>
         </div>
       </div>
     </div>
@@ -65,6 +65,8 @@
 import $ from 'jQuery';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faBackspace } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
+import endpoint from '@/endpoint.json';
 
 library.add(faBackspace);
 
@@ -77,6 +79,11 @@ export default {
       callTimer: '',
     };
   },
+
+  mounted() {
+    this.phoneNumberVue = JSON.parse(sessionStorage.getItem('loggedIn')).number;
+  },
+
   name: 'Calling',
   methods: {
     getElementId(event) {
@@ -109,13 +116,31 @@ export default {
         }
       }, 1000);
     },
-    declineCall() {
+    endTimer() {
       $('.popup').css('display', 'none');
       clearInterval(this.callTimer);
       this.minutes = 0;
       this.seconds = 0;
       $('#seconds').html('');
       $('#minutes').html('');
+    },
+
+    destroyed() {
+      this.endTimer();
+    },
+
+    endCall() {
+      console.log(this.seconds);
+      axios.put(`${endpoint.url}/phone/call/${this.phoneNumberVue}/${this.seconds}`, this.phoneNumberVue, this.seconds)
+        .then((response) => {
+          if (response.status === 200) {
+            // this.endTimer();
+            console.log('dsa');
+          }
+        })
+        .catch(() => {
+          console.log('dsa');
+        });
     },
   },
 };

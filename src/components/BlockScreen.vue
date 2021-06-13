@@ -26,7 +26,7 @@ export default {
   data() {
     return {
       loginForm: {
-        number: '789789789',
+        number: '772905835',
         pin: '1234',
       },
     };
@@ -45,7 +45,7 @@ export default {
             });
             setTimeout(() => {
               this.$router.push('/dashboard');
-            }, 2000);
+            }, 1000);
           }
         })
         .catch(() => {

@@ -9,6 +9,56 @@
 
 <script>
 
+import axios from 'axios';
+import endpoint from '@/endpoint.json';
+
+export default {
+  data() {
+    return {
+      timeData: {
+        phoneNumber: '',
+        time: 0,
+      },
+      timeSpent: '',
+    };
+  },
+
+  mounted() {
+    this.timeData.phoneNumber = JSON.parse(sessionStorage.getItem('loggedIn')).number;
+    this.timeSpentOnInternet();
+  },
+
+  destroyed() {
+    this.endConnection();
+    clearInterval(this.timeSpent);
+    this.timeData.time = 0;
+  },
+
+  methods: {
+    timeSpentOnInternet() {
+      setTimeout(() => {
+      }, 3000);
+
+      this.timeSpent = setInterval(() => {
+        this.timeData.time += 1;
+      }, 1000);
+    },
+    endConnection() {
+      console.log(this.timeData);
+      console.log(this.timeData.time);
+
+      axios.post(`${endpoint.url}/browser/time`, this.timeData)
+        .then((response) => {
+          if (response.status === 200) {
+            console.log('poszlo');
+          }
+        })
+        .catch(() => {
+          console.log('nie poszlo');
+        });
+    },
+  },
+};
 </script>
 
 <style scoped>
