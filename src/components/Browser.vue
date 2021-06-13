@@ -25,8 +25,11 @@ export default {
 
   mounted() {
     this.timeData.phoneNumber = JSON.parse(sessionStorage.getItem('loggedIn')).number;
+    console.log(this.timeData.phoneNumber);
+    this.load();
     this.timeSpentOnInternet();
   },
+
 
   destroyed() {
     this.endConnection();
@@ -35,6 +38,18 @@ export default {
   },
 
   methods: {
+    load() {
+      axios.post(`${endpoint.url}/browser`, '1')
+        .then((response) => {
+          if (response.status === 200) {
+            console.log(response.data);
+          }
+        })
+        .catch(() => {
+          console.log('nie poszlo');
+        });
+    },
+
     timeSpentOnInternet() {
       setTimeout(() => {
       }, 3000);
