@@ -31,6 +31,7 @@ export default {
     return {
       phoneNumberVue: '',
       messages: [],
+      receiverPhoneNumber: ''
     };
   },
 

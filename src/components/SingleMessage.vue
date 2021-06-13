@@ -1,23 +1,23 @@
 <template>
   <div id="main-view">
     <div class="message_title">
-      <div class="sub_but" v-on:click="$router.push('/messages')"> Back </div>
+      <div class="sub_but" v-on:click="$router.push('/messages')"> Back</div>
     </div>
 
     <div class="message_view">
 
       <div class="recipent">
         <div class="message_number">To:</div>
-        <input class="message_to" value="123" type="text" v-model="newSms.phoneNumberReceiver">
+        <input v-model="newSms.phoneNumberReceiver" class="message_to" type="text">
       </div>
 
       <div class="message_body">
-        <div class="message_sent" v-for="(sent, index) in sentMessages" :key="'snt'+index">
-          <p>{{sent.message}}</p>
+        <div v-for="(sent, index) in sentMessages" :key="'snt'+index" class="message_sent">
+          <p>{{ sent.message }}</p>
         </div>
 
-        <div class="message_received" v-for="(received, indexx) in receivedMessages" :key="'rcv'+indexx">
-          <p>{{received.message}}</p>
+        <div v-for="(received, indexx) in receivedMessages" :key="'rcv'+indexx" class="message_received">
+          <p>{{ received.message }}</p>
         </div>
       </div>
 
@@ -39,9 +39,10 @@ export default {
   data() {
     return {
       newSms: {
-        phoneNumberSender: JSON.parse(sessionStorage.getItem('loggedIn')),
-        phoneNumberReceiver: JSON.parse(sessionStorage.getItem('phoneNumberReceiver')),
+        phoneNumberSender: '',
+        phoneNumberReceiver: '',
         message: '',
+        date: ''
       },
 
       sentMessages: [],
@@ -50,12 +51,20 @@ export default {
   },
 
   mounted() {
-    this.loadCurrentNumberSms();
-    console.log(this.phoneNumberReceiver);
+    this.newSms.phoneNumberSender = JSON.parse(sessionStorage.getItem('loggedIn'));
+    if (sessionStorage.getItem('phoneNumberReceiver') != null) {
+      let receiver = JSON.parse(sessionStorage.getItem('phoneNumberReceiver')).phoneNumberReceiver;
+      this.newSms.phoneNumberReceiver = receiver;
+      this.loadCurrentNumberSms();
+    }
+
+
+
   },
 
   methods: {
     send() {
+console.log(this.newSms)
       axios.post(`${endpoint.url}/sms/singlemessage`, this.newSms)
         .then((response) => {
           if (response.status === 200) {
@@ -68,14 +77,15 @@ export default {
     },
 
     loadCurrentNumberSms() {
-      axios.get(`${endpoint.url}/sms/${this.phoneNumberReceiver}`)
+      console.log(this.newSms)
+      axios.post(`${endpoint.url}/sms/load`, this.newSms)
         .then((response) => {
           if (response.status === 200) {
-            console.log(response.data);
+            this.sentMessages.push(response.data);
           }
         })
         .catch(() => {
-          this.info = 'Zly login lub haslo';
+          console.log('dsa');
         });
     },
   },
