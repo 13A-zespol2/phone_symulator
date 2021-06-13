@@ -16,4 +16,7 @@ module.exports = {
     "linebreak-style": 0,
     'max-len': ["error", { "code": 200 }]
   },
+  dev: {
+    useEslint: false
+  },
 };
