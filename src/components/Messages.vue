@@ -42,11 +42,13 @@ export default {
   },
   methods: {
     smsLoad() {
+      console.log(this.phoneNumber);
       axios.get(`${endpoint.url}/sms/${this.phoneNumber}`)
         .then((response) => {
           if (response.status === 200) {
             console.log(response.data);
             this.messages = response.data;
+
           }
         })
         .catch(() => {
@@ -91,6 +93,14 @@ body {
   background-color: #393939;
 }
 
+.message_content .content{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  max-width: 60%;
+}
 .top_bar {
   position: absolute;
   top: 25px;
@@ -232,6 +242,7 @@ body {
   padding: 5px 10px;
   border-radius: 5px;
   transition: .5s ease;
+  overflow: hidden;
 }
 
 .simple_message:hover {

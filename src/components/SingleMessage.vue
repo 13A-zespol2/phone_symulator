@@ -291,6 +291,11 @@ input[type="submit"]:hover {
   margin: 15px;
   border-radius: 9px;
   position: relative;
+  word-wrap: break-word;
+
+}
+.message_sent p{
+  word-wrap: break-word;
 }
 
 .message_sent:before {
