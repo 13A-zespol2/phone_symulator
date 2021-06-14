@@ -61,6 +61,9 @@ export default {
 };
 </script>
 <style scoped>
+*{
+  font-family: cg;
+}
 body{
   display:flex;
   justify-content:center;

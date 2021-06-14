@@ -5,10 +5,10 @@
     <FlashMessage :position="'right top'"></FlashMessage>
     <form>
       <div class="form_input">
-        <input v-model="loginForm.number" placeholder="Your phone number" type="text"/>
+        <input v-model="loginForm.number" placeholder="Your phone number" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" type="text"/>
       </div>
       <div class="form_input">
-        <input v-model="loginForm.pin" placeholder="Your passcode" type="password"/>
+        <input v-model="loginForm.pin" id="pass" placeholder="Your passcode" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" type="password"/>
       </div>
       <div id="example" class="form_input">
         <a class="submit_button" type="submit" v-on:click="submit()">Log In</a>
@@ -21,6 +21,13 @@
 
 import axios from 'axios';
 import endpoint from '@/endpoint.json';
+import $ from 'jQuery';
+
+$(document).on('keypress', '#pass', function(){
+  if($(this).val().length > 7){
+    event.preventDefault();
+  }
+});
 
 export default {
   data() {
