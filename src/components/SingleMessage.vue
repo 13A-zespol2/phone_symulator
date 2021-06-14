@@ -15,12 +15,18 @@
 
 
       <div class="message_body">
-        <div class="message_sent"v-for="(oneMessage, index) in allMessages" :key="'mess'+index" v-if="oneMessage.phoneNumberSender.number === newSms.phoneNumberSender.number">
-          <p>{{oneMessage.message}}</p>
-        </div>
+        <div v-for="(oneMessage, index) in allMessages" :key="'mess'+index">
+          <div v-if="oneMessage.phoneNumberSender.number === newSms.phoneNumberSender.number">
+            <div class="message_sent" >
+              <p>{{oneMessage.message}}</p>
+            </div>
+          </div>
 
-        <div class="message_received" v-for="(oneMessage, index) in allMessages" :key="'mess'+index" v-if="oneMessage.phoneNumberSender.number !== newSms.phoneNumberSender.number">
-          <p>{{ oneMessage.message }}</p>
+          <div v-else>
+            <div class="message_received">
+              <p>{{ oneMessage.message }}</p>
+            </div>
+          </div>
         </div>
 
 
