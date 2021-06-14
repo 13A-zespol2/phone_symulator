@@ -1,7 +1,8 @@
 <template>
   <div id="main-view">
+    <FlashMessage :position="'right top'"></FlashMessage>
     <div class="message_title">
-      <div class="sub_but" v-on:click="$router.push('/messages')"> Back</div>
+      <div class="back_but" v-on:click="$router.push('/messages')"> Back</div>
     </div>
 
     <div class="message_view">
@@ -9,10 +10,8 @@
 
       <div class="recipent">
         <div class="message_number">To:</div>
-        <input v-model="newSms.phoneNumberReceiver" class="message_to" type="text">
+        <input v-model="newSms.phoneNumberReceiver" class="message_to" id="message_to" type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
       </div>
-
-
 
       <div class="message_body">
         <div v-for="(oneMessage, index) in allMessages" :key="'mess'+index">
@@ -28,13 +27,11 @@
             </div>
           </div>
         </div>
-
-
       </div>
 
       <div class="message_text">
-        <textarea v-model="newSms.message"></textarea>
-        <input class="sub_but" type="submit" value="➕" v-on:click="send()">
+        <textarea id="textara" v-model="newSms.message"></textarea>
+        <input class="sub_but" id="send_message_button" type="submit" value="➕" v-on:click="send()">
       </div>
     </div>
   </div>
@@ -44,7 +41,13 @@
 
 import axios from 'axios';
 import endpoint from '@/endpoint.json';
+import $ from 'jQuery';
 
+$(document).on('keypress', 'input', function(){
+  if($(this).val().length > 8){
+    event.preventDefault();
+  }
+});
 export default {
 
   data() {
@@ -55,40 +58,64 @@ export default {
         message: '',
         date: '',
       },
-
       allMessages: [],
-
-
     };
   },
 
   mounted() {
     this.newSms.phoneNumberSender = JSON.parse(sessionStorage.getItem('loggedIn'));
-    if (sessionStorage.getItem('phoneNumberReceiver') != null) {
-      this.newSms.phoneNumberReceiver = JSON.parse(sessionStorage.getItem('phoneNumberReceiver')).phoneNumberSender.number;
-      if(this.newSms.phoneNumberSender.number===this.newSms.phoneNumberReceiver){
-        this.newSms.phoneNumberReceiver = JSON.parse(sessionStorage.getItem('phoneNumberReceiver')).phoneNumberReceiver;
+    if(sessionStorage.getItem('is_new_message') ==  'false') {
+      if (sessionStorage.getItem('phoneNumberReceiver') != null) {
+        this.newSms.phoneNumberReceiver = JSON.parse(sessionStorage.getItem('phoneNumberReceiver')).phoneNumberSender.number;
+        if (this.newSms.phoneNumberSender.number === this.newSms.phoneNumberReceiver) {
+          this.newSms.phoneNumberReceiver = JSON.parse(sessionStorage.getItem('phoneNumberReceiver')).phoneNumberReceiver;
+        }
+        this.loadCurrentNumberSms();
       }
-
-      this.loadCurrentNumberSms();
+      $('#message_to').css( 'pointer-events', 'none' );
     }
   },
 
   methods: {
     send() {
+      if(this.newSms.phoneNumberReceiver == this.newSms.phoneNumberSender.number){
+        this.flashMessage.error({
+          status: 'error',
+          title: 'Error!',
+          message: 'You cannot send message to yourself :( Provide correct number!',
+          time: 2000,
+        });
+        return;
+      }
+      if ( $('textarea').val().length < 1){
+        this.flashMessage.error({
+          status: 'error',
+          title: 'Error!',
+          message: 'Text message cannot be empty!',
+          time: 2000,
+        });
+        return;
+      }
       axios.post(`${endpoint.url}/sms/singlemessage`, this.newSms)
         .then((response) => {
           if (response.status === 200) {
             this.allMessages.push(response.data);
+            this.newSms.message = '';
           }
         })
         .catch(() => {
-          console.log('err');
+          this.flashMessage.error({
+            status: 'error',
+            title: 'Error!',
+            message: 'Provided number does not exist. Please provide correct data.',
+            time: 2000,
+          });
         });
     },
 
     loadCurrentNumberSms() {
       console.log(this.newSms);
+      $('.message_to').text('');
       axios.post(`${endpoint.url}/sms/load`, this.newSms)
         .then((response) => {
           if (response.status === 200) {
@@ -102,9 +129,15 @@ export default {
     },
   },
 };
+
+
 </script>
 
 <style scoped>
+
+*{
+  font-family: cg;
+}
 body {
   display: flex;
   justify-content: center;

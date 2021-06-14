@@ -3,7 +3,7 @@
     <div id="main-view">
       <div class="messages_title">
         <p>Messages</p>
-        <input class="sub_but" type="submit" value="➕" v-on:click="$router.push('/singlemessage')">
+        <input class="sub_but" type="submit" value="➕" v-on:click="new_message">
       </div>
 
       <div class="message_view">
@@ -26,6 +26,9 @@
 
 import axios from 'axios';
 import endpoint from '@/endpoint.json';
+import $ from 'jQuery';
+
+
 
 export default {
   data() {
@@ -41,6 +44,10 @@ export default {
     this.smsLoad();
   },
   methods: {
+    new_message(){
+      sessionStorage.setItem('is_new_message','true');
+      this.$router.push('/singlemessage');
+    },
     smsLoad() {
       console.log(this.phoneNumber);
       axios.get(`${endpoint.url}/sms/${this.phoneNumber}`)
@@ -63,6 +70,7 @@ export default {
     klik(phoneNumber) {
       console.log(phoneNumber);
       sessionStorage.setItem('phoneNumberReceiver', JSON.stringify(phoneNumber));
+      sessionStorage.setItem('is_new_message','false');
       this.$router.push('/singlemessage');
 
       /* axios.get(`${endpoint.url}/sms/${this.message}`)
@@ -98,8 +106,11 @@ body {
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 1;
+  word-wrap: break-word;
+  width : 50%;
   -webkit-box-orient: vertical;
-  max-width: 60%;
+  display:inline-block;
+  white-space: nowrap;
 }
 .top_bar {
   position: absolute;
@@ -210,7 +221,11 @@ body {
   align-items: center;
   color: white;
 }
-
+.sender{
+  font-size:20px;
+  font-weight: 900;
+  color:#00b330;
+}
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -236,7 +251,7 @@ body {
 .simple_message {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   margin: 10px;
   padding: 5px 10px;

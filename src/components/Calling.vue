@@ -47,9 +47,10 @@
       </div>
       <div class="popup">
         <div>
-          <p class="popup_text">Calling</p>
+          <p class="popup_text_bold">Calling</p>
           <p class="popup_text">+48 <span id="calling_number"></span></p>
-          <p class="popup_text timer_text"><span id="minutes"></span>:<span id="seconds"></span></p>
+          <p class="popup_text timer_text"><span id="seconds">0</span></p>
+          <p class="popup_text">sec.</p>
         </div>
 
         <div class="number_container">
@@ -67,6 +68,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faBackspace } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import endpoint from '@/endpoint.json';
+
 
 library.add(faBackspace);
 
@@ -112,6 +114,8 @@ export default {
           time: 2000,
         });
       }else{
+        $('.popup').addClass('popup_opened');
+        $('.home_button').css('pointer-events','none');
         $('.popup').css('display', 'flex');
         $('#calling_number').html($('#number_input').val());
         setTimeout(() => {
@@ -120,10 +124,12 @@ export default {
         this.callTimer = setInterval(() => {
           this.minutes += 1;
           this.callData.seconds += 1;
-          if (this.callData.seconds < 60) {
-            $('#minutes').html('00');
+          if(this.callData.seconds > 0){
+            $('#seconds').html(this.callData.seconds);
           }
-          $('#seconds').html(this.callData.seconds);
+          else{
+            $('#seconds').html('0');
+          }
 
           if (this.callData.seconds === 60) {
             this.minutes += 1;
@@ -137,10 +143,10 @@ export default {
       this.minutes = 0;
       this.callData.seconds = 0;
       $('#seconds').html('');
-      $('#minutes').html('');
     },
 
     endCall() {
+      $('.home_button').css('pointer-events','auto');
       axios.post(`${endpoint.url}/call/endcall`, this.callData)
         .then((response) => {
           if (response.status === 200) {
@@ -168,6 +174,9 @@ export default {
 </script>
 
 <style scoped>
+*{
+  font-family: cg;
+}
 .popup{
   width:100%;
   height:100%;
@@ -184,6 +193,16 @@ export default {
   align-items: center;
 }
 
+.popup_text_bold{
+  font-family: cg;
+  font-size: 48px;
+  color: #00f2ff;
+  font-weight: 700;
+  text-align: center;
+  width: 100%;
+}
+
+
 .popup_text{
   font-family: cg;
   font-size: 28px;
@@ -195,6 +214,13 @@ export default {
 .timer_text{
   font-size: 18px;
   margin-top:20px;
+}
+
+#seconds{
+  font-size:64px;
+  font-family: cg;
+  font-weight: 700;
+  color:#00f2ff;
 }
 
 @font-face {
