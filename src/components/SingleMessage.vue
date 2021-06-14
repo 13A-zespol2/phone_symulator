@@ -6,19 +6,24 @@
 
     <div class="message_view">
 
+
       <div class="recipent">
         <div class="message_number">To:</div>
         <input v-model="newSms.phoneNumberReceiver" class="message_to" type="text">
       </div>
 
+
+
       <div class="message_body">
-        <div v-for="(sent, index) in sentMessages" :key="'snt'+index" class="message_sent">
-          <p>{{ sent.message }}</p>
+        <div class="message_sent"v-for="(oneMessage, index) in allMessages" :key="'mess'+index" v-if="oneMessage.phoneNumberSender.number === newSms.phoneNumberSender.number">
+          <p>{{oneMessage.message}}</p>
         </div>
 
-        <div v-for="(received, indexx) in receivedMessages" :key="'rcv'+indexx" class="message_received">
-          <p>{{ received.message }}</p>
+        <div class="message_received" v-for="(oneMessage, index) in allMessages" :key="'mess'+index" v-if="oneMessage.phoneNumberSender.number !== newSms.phoneNumberSender.number">
+          <p>{{ oneMessage.message }}</p>
         </div>
+
+
       </div>
 
       <div class="message_text">
@@ -45,15 +50,20 @@ export default {
         date: '',
       },
 
-      sentMessages: [],
-      receivedMessages: [],
+      allMessages: [],
+
+
     };
   },
 
   mounted() {
     this.newSms.phoneNumberSender = JSON.parse(sessionStorage.getItem('loggedIn'));
     if (sessionStorage.getItem('phoneNumberReceiver') != null) {
-      this.newSms.phoneNumberReceiver = JSON.parse(sessionStorage.getItem('phoneNumberReceiver')).phoneNumberReceiver;
+      this.newSms.phoneNumberReceiver = JSON.parse(sessionStorage.getItem('phoneNumberReceiver')).phoneNumberSender.number;
+      if(this.newSms.phoneNumberSender.number===this.newSms.phoneNumberReceiver){
+        this.newSms.phoneNumberReceiver = JSON.parse(sessionStorage.getItem('phoneNumberReceiver')).phoneNumberReceiver;
+      }
+
       this.loadCurrentNumberSms();
     }
   },
@@ -63,7 +73,7 @@ export default {
       axios.post(`${endpoint.url}/sms/singlemessage`, this.newSms)
         .then((response) => {
           if (response.status === 200) {
-            this.sentMessages.push(response.data);
+            this.allMessages.push(response.data);
           }
         })
         .catch(() => {
@@ -76,7 +86,8 @@ export default {
       axios.post(`${endpoint.url}/sms/load`, this.newSms)
         .then((response) => {
           if (response.status === 200) {
-            this.sentMessages.push(response.data);
+            this.allMessages = response.data
+            console.log(this.allMessages);
           }
         })
         .catch(() => {

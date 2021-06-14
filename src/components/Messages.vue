@@ -12,7 +12,8 @@
            v-for="(message, index) in messages" :key="'mess'+index">
         <div class="icon">K</div>
         <div class="message_content">
-            <p class="sender" >{{ message.phoneNumberReceiver }} </p>
+            <p class="sender" v-if="message.phoneNumberReceiver===phoneNumber">{{ message.phoneNumberSender.number }} </p>
+            <p class="sender" v-else>{{ message.phoneNumberReceiver }} </p>
             <p class="content" >{{ message.message }} </p>
         </div>
       </div>
@@ -61,6 +62,7 @@ export default {
       console.log(phoneNumber);
       sessionStorage.setItem('phoneNumberReceiver', JSON.stringify(phoneNumber));
       this.$router.push('/singlemessage');
+
       /* axios.get(`${endpoint.url}/sms/${this.message}`)
         .then((response) => {
           if (response.status === 200) {

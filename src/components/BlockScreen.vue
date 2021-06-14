@@ -26,7 +26,7 @@ export default {
   data() {
     return {
       loginForm: {
-        number: '772905835',
+        number: '',
         pin: '1234',
       },
     };
